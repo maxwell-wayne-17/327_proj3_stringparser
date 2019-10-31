@@ -72,6 +72,37 @@ int StringParserClass::findTag(char *pTagToLookFor, char *&pStart, char *&pEnd){
 	}
 
 	std::string stringToSearch(pStart);
+	std::string tagToFind(pTagToLookFor);
+
+	//for loop to compare strings
+	bool endCharFound = false;
+	for (int i = 0; i < stringToSearch.size() && !endCharFound; i++){
+
+		//found starting character in string
+		if (stringToSearch[i] == tagToFind[0]){
+
+			int tracker = i;
+			bool tagIsNotEqual = false;
+			//check for valid substring
+			for (int j = 0; j < tagToFind.size() && !tagIsNotEqual; j++){
+				//checking if tag is not equal
+				if (stringToSearch[tracker] != tagToFind[j]){
+					//break out of inner for loop
+					tagIsNotEqual = true;
+				}
+				else{
+					tracker ++;
+				}
+			}
+
+			//tags failed
+			if (tagIsNotEqual){
+				return FAIL;
+			}
+
+			*pStart = stringToSearch[i];
+		}
+	}
 
 
 
