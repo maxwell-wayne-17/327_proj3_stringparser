@@ -1,8 +1,8 @@
 /*
  * StringParserClass.cpp
  *
- *  Created on: Oct 8, 2017
- *      Author: keith
+ *  Created on: Oct 29, 2019
+ *      Author: Max Wayne
  */
 
 #include <string>
