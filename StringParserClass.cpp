@@ -11,6 +11,10 @@
 #include "../327_proj3_test/includes/constants.h"
 #include "../327_proj3_test/includes/StringParserClass.h"
 
+
+
+#include <iostream>
+
 using namespace KP_StringParserClass;
 
 StringParserClass::StringParserClass(void):pStartTag(NULL), pEndTag(NULL), areTagsSet(false){}
@@ -36,7 +40,19 @@ int StringParserClass::setTags(const char *pStart, const char *pEnd){
 }
 
 int StringParserClass::getDataBetweenTags(char *pDataToSearchThru, std::vector<std::string> &myVector){
-	return -1000;
+
+	if (!this->pStartTag || !this->pEndTag){
+		return ERROR_TAGS_NULL;
+	}
+	if (!pDataToSearchThru){
+		return ERROR_DATA_NULL;
+	}
+
+	myVector.clear();
+
+
+
+	return SUCCESS;
 }
 
 
@@ -50,7 +66,16 @@ void StringParserClass::cleanup(){
 }
 
 int StringParserClass::findTag(char *pTagToLookFor, char *&pStart, char *&pEnd){
-	return -1000;
+
+	if (pStart == NULL|| pEnd == NULL){
+		return ERROR_TAGS_NULL;
+	}
+
+	std::string stringToSearch(pStart);
+
+
+
+	return SUCCESS;
 }
 
 
