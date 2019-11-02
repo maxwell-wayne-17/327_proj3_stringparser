@@ -30,11 +30,14 @@ int StringParserClass::setTags(const char *pStart, const char *pEnd){
 		return ERROR_TAGS_NULL;
 	}
 
-	char start = *pStart;
-	char end = *pEnd;
+	cleanup();
 
-	this->pStartTag = &start;
-	this->pEndTag = &end;
+	pStartTag = new char[strlen(pStart) + 1];
+	pEndTag = new char[strlen(pEnd) + 1];
+
+	strcpy(pStartTag, pStart);
+	strcpy(pEndTag, pEnd);
+
 
 	return SUCCESS;
 }
@@ -49,6 +52,47 @@ int StringParserClass::getDataBetweenTags(char *pDataToSearchThru, std::vector<s
 	}
 
 	myVector.clear();
+	std::string word = "";
+
+
+	for (int i = 0; i < strlen(pDataToSearchThru); i++){
+
+		char starter = pStartTag[0];
+		char check = pDataToSearchThru[i];
+		if (check == starter){
+
+			char *dataStart = &pDataToSearchThru[i];
+			if (strncmp(dataStart, pStartTag, strlen(pStartTag)) == 0){
+
+				i += strlen(pStartTag); //tag is equal,skip over tag
+
+				char endTagStart = pEndTag[0];
+				check = pDataToSearchThru[i];
+				bool foundEndTagStart = false;
+				while (check != endTagStart && i < strlen(pDataToSearchThru)){
+
+					word += check;
+					i++;
+					check = pDataToSearchThru[i];
+
+
+					}
+				if (check == endTagStart){
+					foundEndTagStart = true;
+					char* dataEnd = &pDataToSearchThru[i];
+					if (strncmp(dataEnd, pEndTag, strlen(pEndTag)) == 0){
+
+						myVector.push_back(word);
+						word = "";
+						i += strlen(pEndTag) - 1;
+					}
+				}
+
+			} //end of actually finding full start tag
+
+		} //end of checking for first char of pStartTag
+
+	} // outer most for loop
 
 
 
